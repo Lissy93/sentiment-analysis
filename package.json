@@ -1,0 +1,31 @@
+{
+  "name": "sentiment-analysis",
+  "version": "0.0.1",
+  "description": "Sentiment analysis module using AFINN-111",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lissy93/sentiment-analysis.git"
+  },
+  "keywords": [
+    "sentiment",
+    "analysis",
+    "sentiment",
+    "analysis",
+    "twitter",
+    "AFINN",
+    "AFINN-111",
+    "emotion",
+    "detection",
+    "valence"
+  ],
+  "author": "Alicia Sykes <sykes.alicia@gmail.com> (http://aliciasykes.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lissy93/sentiment-analysis/issues"
+  },
+  "homepage": "https://github.com/Lissy93/sentiment-analysis#readme"
+}
