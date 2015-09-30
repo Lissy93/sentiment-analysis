@@ -12,7 +12,11 @@
   };
 
   getScoreOfWord = function(word) {
-    return 0;
+    if (afinnWordList[word]) {
+      return afinnWordList[word];
+    } else {
+      return 0;
+    }
   };
 
   getWordsInSentence = function(sentence) {
@@ -20,6 +24,7 @@
   };
 
   analyseSentence = function(sentence) {
+    console.log(getScoreOfWord('fails'));
     return 0;
   };
 
