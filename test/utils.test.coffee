@@ -126,3 +126,11 @@ describe 'getWordsInSentence will transform a sentence into a clean array', ()->
   it 'Should remove special characters', ()->
     expect(getWordsInSentence('foo ! ^&*^&^%^%&^^&%%^bar$$%^'))
     .eql(['foo', 'bar'])
+
+describe 'removeDupplicates should remove dupplicates from an array', () ->
+  removeDupplicates = sentimentAnalysis.removeDuplicates
+
+  it 'should remove duplicates', () ->
+    expect(removeDupplicates(['hello', 'world', 'hello', 'hello']))
+    .eql(['hello', 'world'])
+    
