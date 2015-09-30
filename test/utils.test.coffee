@@ -100,3 +100,29 @@ describe 'getScoreOfWord method return a sentiment score for that word', ()->
   it 'should return 0 for neutral words that exist', ()->
     expect(getScoreOfWord('some kind')).equal(0)
     # There is only 1 neutral result in the AFINN word list!
+
+describe 'getWordsInSentence will transform a sentence into a clean array', ()->
+  getWordsInSentence = sentimentAnalysis.getWordsInSentence
+
+  it 'Should correctly turn a sentence into an array', ()->
+    expect(getWordsInSentence('hello world')).eql(['hello', 'world'])
+    expect(getWordsInSentence('this is a longer sentence'))
+    .eql(['this', 'is', 'a', 'longer', 'sentence'])
+
+  it 'Should normalise case', ()->
+    expect(getWordsInSentence('HeLlO wOrLd')).eql(['hello', 'world'])
+    expect(getWordsInSentence('JAVASCRIPT')).eql(['javascript'])
+
+  it 'Should remove dupplicates', ()->
+    expect(getWordsInSentence('foo foo bar foo'))
+    .eql(['foo', 'bar'])
+  expect(getWordsInSentence('foo foo BAR Foo bAr foO bar foo'))
+  .eql(['foo', 'bar', ])
+
+  it 'Should remove blanks', ()->
+    expect(getWordsInSentence('space       blank        '))
+    .eql(['space', 'blank'])
+
+  it 'Should remove special characters', ()->
+    expect(getWordsInSentence('foo ! ^&*^&^%^%&^^&%%^bar$$%^'))
+    .eql(['foo', 'bar'])
