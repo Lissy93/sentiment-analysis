@@ -133,4 +133,3 @@ describe 'removeDupplicates should remove dupplicates from an array', () ->
   it 'should remove duplicates', () ->
     expect(removeDupplicates(['hello', 'world', 'hello', 'hello']))
     .eql(['hello', 'world'])
-    
