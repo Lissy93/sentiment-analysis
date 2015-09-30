@@ -21,6 +21,7 @@
 
   getWordsInSentence = function(sentence) {
     sentence = sentence != null ? sentence : '';
+    sentence = typeof sentence === 'string' ? sentence : '';
     sentence = sentence.toLowerCase();
     sentence = sentence.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
     sentence = sentence.replace(/[^\w\s]/gi, '');
@@ -49,7 +50,18 @@
   };
 
   analyseSentence = function(sentence) {
-    return 0;
+    var i, len, score, word, wordsArr;
+    score = 0;
+    wordsArr = getWordsInSentence(sentence);
+    for (i = 0, len = wordsArr.length; i < len; i++) {
+      word = wordsArr[i];
+      if (doesWordExist(word)) {
+        score += getScoreOfWord(word);
+      }
+    }
+    score = score > 10 ? 10 : score;
+    score = score < -10 ? -10 : score;
+    return score;
   };
 
   module.exports = analyseSentence;
@@ -60,6 +72,7 @@
       _private: {
         doesWordExist: doesWordExist,
         getScoreOfWord: getScoreOfWord,
+        removeDuplicates: removeDuplicates,
         getWordsInSentence: getWordsInSentence
       }
     };
