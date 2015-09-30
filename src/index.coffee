@@ -7,11 +7,25 @@ doesWordExist = (word)->
 
 # Returns an integer value + or - sentiment score for given word
 getScoreOfWord = (word)->
-  0
+  if afinnWordList[word] then afinnWordList[word] else 0
 
 # Formats sentence and returns a lowercase a-z array of words
 getWordsInSentence = (sentence)->
-  []
+  sentence = if sentence? then sentence else '' # Double check is defined
+  sentence = sentence.toLowerCase()
+  sentence = sentence.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '') # Remove URLs
+  sentence = sentence.replace(/[^\w\s]/gi, '')  # Remove special characters
+  sentence = sentence.split(' ')                # Split into an array
+  sentence = sentence.filter((n) -> n != '')    # Remove blanks
+  sentence = removeDuplicates(sentence)
+
+# Remove Duplicates
+removeDuplicates = (arr) ->
+  if arr.length == 0
+    return []
+  res = {}
+  res[arr[key]] = arr[key] for key in [0..arr.length-1]
+  value for key, value of res
 
 # Returns an overall sentiment score for sentence
 analyseSentence = (sentence) ->
