@@ -1,11 +1,11 @@
 {
   "name": "sentiment-analysis",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Sentiment analysis module using AFINN-111",
   "main": "index.js",
   "scripts": {
     "test": "gulp test",
-    "cover": "istanbul cover node_modules/mocha/bin/_mocha --dir ./reports/coverage-reports"
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha"
   },
   "repository": {
     "type": "git",
@@ -39,6 +39,7 @@
     "gulp-footer": "^1.0.5",
     "gulp-istanbul": "^0.10.1",
     "gulp-mocha": "^2.1.3",
-    "gulp-watch": "^4.3.5"
+    "gulp-watch": "^4.3.5",
+    "mocha": "^2.3.3"
   }
 }
