@@ -5,7 +5,7 @@ process.env.NODE_ENV = 'test'
 sentimentAnalysis = require('../index')._private
 
 
-describe 'The doesWordExist method will return boolean weather word exists', ()->
+describe 'doesWordExist will return boolean weather word exists', ()->
   doesWordExist = sentimentAnalysis.doesWordExist
 
   it 'should return a boolean value', ()->
@@ -55,3 +55,48 @@ describe 'The doesWordExist method will return boolean weather word exists', ()-
     expect(doesWordExist(1)).to.be.false
     expect(doesWordExist([])).to.be.false
     expect(doesWordExist(undefined)).to.be.false
+
+
+
+describe 'getScoreOfWord method return a sentiment score for that word', ()->
+  getScoreOfWord = sentimentAnalysis.getScoreOfWord
+
+  it 'should return an integer', ()->
+    expect(getScoreOfWord('amazing')).to.be.a('number')
+    expect(getScoreOfWord('warm')).to.be.a('number')
+    expect(getScoreOfWord('yummy')).to.be.a('number')
+
+  it 'should be in a range of -5 to + 5', () ->
+    expect(getScoreOfWord('nice')).to.be.above(-5).to.be.below(5)
+    expect(getScoreOfWord('good')).to.be.below(5).to.be.below(5)
+    expect(getScoreOfWord('great')).to.be.above(-5).to.be.below(5)
+    expect(getScoreOfWord('awesome')).to.be.above(-5).to.be.below(5)
+
+  it 'should return 0 if word doesn\'t exist, rather than crashing', ()->
+    expect(getScoreOfWord('batman')).equal(0)
+    expect(getScoreOfWord('superman')).equal(0)
+    expect(getScoreOfWord('spiderman')).equal(0)
+    expect(getScoreOfWord('pepperpig')).equal(0)
+
+  it 'should return 0 if passed multiple words at a time that don\'t exist', ()->
+    expect(getScoreOfWord('type error')).equal(0)
+    expect(getScoreOfWord('everything is stupid')).equal(0)
+    expect(getScoreOfWord('dinosaurs are awesome')).equal(0)
+
+  it 'should return actual positive score for positive words that exist', ()->
+    expect(getScoreOfWord('united')).equal(1)
+    expect(getScoreOfWord('unstoppable')).equal(2)
+    expect(getScoreOfWord('excited')).equal(3)
+    expect(getScoreOfWord('win')).equal(4)
+    expect(getScoreOfWord('outstanding')).equal(5)
+
+  it 'should return actual negative score for negative words that exist', ()->
+    expect(getScoreOfWord('fight')).equal(-1)
+    expect(getScoreOfWord('fails')).equal(-2)
+    expect(getScoreOfWord('evil')).equal(-3)
+    expect(getScoreOfWord('fraud')).equal(-4)
+    expect(getScoreOfWord('twat')).equal(-5)
+
+  it 'should return 0 for neutral words that exist', ()->
+    expect(getScoreOfWord('some kind')).equal(0)
+    # There is only 1 neutral result in the AFINN word list!
