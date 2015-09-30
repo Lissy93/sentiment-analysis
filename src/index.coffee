@@ -3,7 +3,7 @@ afinnWordList = require './AFINN-111.json' # Get the JSON AFINN-111 word list
 
 # Returns a boolean true if given word is found in word list
 doesWordExist = (word)->
-  true
+  if word of afinnWordList then true else false
 
 # Returns an integer value + or - sentiment score for given word
 getScoreOfWord = (word)->

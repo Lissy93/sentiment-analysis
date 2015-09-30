@@ -4,7 +4,11 @@
   afinnWordList = require('./AFINN-111.json');
 
   doesWordExist = function(word) {
-    return true;
+    if (word in afinnWordList) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   getScoreOfWord = function(word) {
