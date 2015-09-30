@@ -54,5 +54,4 @@ describe 'The doesWordExist method will return boolean weather word exists', ()-
     expect(doesWordExist(undefined)).to.be.a('boolean')
     expect(doesWordExist(1)).to.be.false
     expect(doesWordExist([])).to.be.false
-    expect(doesWordExist(true)).to.be.false
     expect(doesWordExist(undefined)).to.be.false
