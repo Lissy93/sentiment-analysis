@@ -45,7 +45,7 @@ gulp.task('test', function (cb) {
         .pipe(istanbul.hookRequire())
         .on('finish', function () {
             gulp.src('./test/**/*.coffee', {read: false})
-                .pipe(mocha({ reporter: 'nyan' }))
+                .pipe(mocha({ reporter: 'spec' }))
                 .pipe(istanbul.writeReports({dir: './reports/coverage-reports'}))
                 //.pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }))
                 .on('end', cb);
