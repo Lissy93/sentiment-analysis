@@ -1,5 +1,5 @@
 (function() {
-  var afinnWordList, analyseSentence, doesWordExist, getScoreOfWord, getWordsInSentence;
+  var afinnWordList, analyseSentence, doesWordExist, getScoreOfWord, getWordsInSentence, removeDuplicates;
 
   afinnWordList = require('./AFINN-111.json');
 
@@ -20,11 +20,35 @@
   };
 
   getWordsInSentence = function(sentence) {
-    return [];
+    sentence = sentence != null ? sentence : '';
+    sentence = sentence.toLowerCase();
+    sentence = sentence.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
+    sentence = sentence.replace(/[^\w\s]/gi, '');
+    sentence = sentence.split(' ');
+    sentence = sentence.filter(function(n) {
+      return n !== '';
+    });
+    return sentence = removeDuplicates(sentence);
+  };
+
+  removeDuplicates = function(arr) {
+    var i, key, ref, res, results, value;
+    if (arr.length === 0) {
+      return [];
+    }
+    res = {};
+    for (key = i = 0, ref = arr.length - 1; 0 <= ref ? i <= ref : i >= ref; key = 0 <= ref ? ++i : --i) {
+      res[arr[key]] = arr[key];
+    }
+    results = [];
+    for (key in res) {
+      value = res[key];
+      results.push(value);
+    }
+    return results;
   };
 
   analyseSentence = function(sentence) {
-    console.log(getScoreOfWord('fails'));
     return 0;
   };
 
