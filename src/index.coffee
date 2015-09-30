@@ -12,6 +12,7 @@ getScoreOfWord = (word)->
 # Formats sentence and returns a lowercase a-z array of words
 getWordsInSentence = (sentence)->
   sentence = if sentence? then sentence else '' # Double check is defined
+  sentence = if typeof sentence == 'string' then sentence else ''
   sentence = sentence.toLowerCase()
   sentence = sentence.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '') # Remove URLs
   sentence = sentence.replace(/[^\w\s]/gi, '')  # Remove special characters
@@ -29,8 +30,14 @@ removeDuplicates = (arr) ->
 
 # Returns an overall sentiment score for sentence
 analyseSentence = (sentence) ->
-  0
-
+  score = 0
+  wordsArr = getWordsInSentence(sentence)
+  for word in wordsArr
+    if doesWordExist(word)
+      score += getScoreOfWord(word)
+  score = if score > 10 then 10 else score
+  score = if score < -10 then -10 else score
+  score
 
 module.exports = analyseSentence # Export main method as module
 
@@ -42,4 +49,5 @@ if process.env.NODE_ENV == 'test'
     _private:
       doesWordExist: doesWordExist
       getScoreOfWord: getScoreOfWord
+      removeDuplicates: removeDuplicates
       getWordsInSentence: getWordsInSentence
