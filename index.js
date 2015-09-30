@@ -19,6 +19,19 @@
     return 0;
   };
 
+  module.exports = analyseSentence;
+
+  if (process.env.NODE_ENV === 'test') {
+    module.exports = {
+      main: analyseSentence,
+      _private: {
+        doesWordExist: doesWordExist,
+        getScoreOfWord: getScoreOfWord,
+        getWordsInSentence: getWordsInSentence
+      }
+    };
+  }
+
 }).call(this);
 /* (C) Alicia Sykes <alicia@aliciasykes.com> 2015           *\
 \* MIT License. Read full license at: https://goo.gl/IL4lQJ */

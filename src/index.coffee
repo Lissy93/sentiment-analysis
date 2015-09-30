@@ -15,5 +15,17 @@ getWordsInSentence = (sentence)->
 
 # Returns an overall sentiment score for sentence
 analyseSentence = (sentence) ->
- 0
+  0
 
+
+module.exports = analyseSentence # Export main method as module
+
+
+# If we're developing/ testing then export the private methods too
+if process.env.NODE_ENV == 'test'
+  module.exports =
+    main: analyseSentence
+    _private:
+      doesWordExist: doesWordExist
+      getScoreOfWord: getScoreOfWord
+      getWordsInSentence: getWordsInSentence
