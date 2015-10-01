@@ -1,7 +1,7 @@
 (function() {
   var afinnWordList, analyseSentence, doesWordExist, getScoreOfWord, getWordsInSentence, removeDuplicates;
 
-  afinnWordList = require('./AFINN-111.json');
+  afinnWordList = require(__dirname + '/AFINN-111.json');
 
   doesWordExist = function(word) {
     if (word in afinnWordList) {
