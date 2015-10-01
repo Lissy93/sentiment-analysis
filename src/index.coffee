@@ -1,5 +1,5 @@
 
-afinnWordList = require './AFINN-111.json' # Get the JSON AFINN-111 word list
+afinnWordList = require __dirname + '/AFINN-111.json' # Get the AFINN-111 list
 
 # Returns a boolean true if given word is found in word list
 doesWordExist = (word)->
