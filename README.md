@@ -12,15 +12,16 @@
 ```javascript
 var sentimentAnalysis = require('sentiment-analysis');
 
-sentimentAnalysis('Dinosaurs are awesome!'); // +4
-sentimentAnalysis('Everything is stupid');  // -2
-sentimentAnalysis('Windows is very unstable');  // -2
-sentimentAnalysis('London is gloomy today because of all the smog');  // -4
-sentimentAnalysis('I am so grateful for all the presents, thank you!');  // +5
-sentimentAnalysis('Really enjoying the warm weather');  // +3
-sentimentAnalysis('It was a catastrophic disaster');  // -6
+sentimentAnalysis('Dinosaurs are awesome!'); // +0.4
+sentimentAnalysis('Everything is stupid');  // -0.2
+sentimentAnalysis('Windows is very unstable');  // -0.2
+sentimentAnalysis('London is gloomy today because of all the smog');  // -0.4
+sentimentAnalysis('I am so grateful for all the presents, thank you!');  // +0.5
+sentimentAnalysis('Really enjoying the warm weather');  // +0.3
+sentimentAnalysis('It was a catastrophic disaster');  // -0.6
 ```
-sentiment-analysis will return a score between -10 and +10, where negetive numbers represent a negetive overall sentiment.
+sentiment-analysis will return a score between -1 and +1, where negative numbers represent a negative overall sentiment.
+
 
 ## Testing
 `npm test`
