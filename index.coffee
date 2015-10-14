@@ -28,6 +28,12 @@ removeDuplicates = (arr) ->
   res[arr[key]] = arr[key] for key in [0..arr.length-1]
   value for key, value of res
 
+# Ensure score is in a valid range between -1 to +1
+scaleScore = (score)->
+  score = if score > 10 then 10 else score
+  score = if score < -10 then -10 else score
+  score/10
+
 # Returns an overall sentiment score for sentence
 analyseSentence = (sentence) ->
   score = 0
@@ -35,9 +41,7 @@ analyseSentence = (sentence) ->
   for word in wordsArr
     if doesWordExist(word)
       score += getScoreOfWord(word)
-  score = if score > 10 then 10 else score
-  score = if score < -10 then -10 else score
-  score
+  scaleScore(score)
 
 module.exports = analyseSentence # Export main method as module
 
@@ -47,6 +51,7 @@ if process.env.NODE_ENV == 'test'
   module.exports =
     main: analyseSentence
     _private:
+      scaleScore: scaleScore
       doesWordExist: doesWordExist
       getScoreOfWord: getScoreOfWord
       removeDuplicates: removeDuplicates

@@ -1,5 +1,5 @@
 (function() {
-  var afinnWordList, analyseSentence, doesWordExist, getScoreOfWord, getWordsInSentence, removeDuplicates;
+  var afinnWordList, analyseSentence, doesWordExist, getScoreOfWord, getWordsInSentence, removeDuplicates, scaleScore;
 
   afinnWordList = require(__dirname + '/AFINN-111.json');
 
@@ -49,6 +49,12 @@
     return results;
   };
 
+  scaleScore = function(score) {
+    score = score > 10 ? 10 : score;
+    score = score < -10 ? -10 : score;
+    return score / 10;
+  };
+
   analyseSentence = function(sentence) {
     var i, len, score, word, wordsArr;
     score = 0;
@@ -59,9 +65,7 @@
         score += getScoreOfWord(word);
       }
     }
-    score = score > 10 ? 10 : score;
-    score = score < -10 ? -10 : score;
-    return score;
+    return scaleScore(score);
   };
 
   module.exports = analyseSentence;
@@ -70,6 +74,7 @@
     module.exports = {
       main: analyseSentence,
       _private: {
+        scaleScore: scaleScore,
         doesWordExist: doesWordExist,
         getScoreOfWord: getScoreOfWord,
         removeDuplicates: removeDuplicates,
