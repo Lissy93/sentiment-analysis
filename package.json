@@ -1,6 +1,6 @@
 {
   "name": "sentiment-analysis",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sentiment analysis module using AFINN-111",
   "main": "index.js",
   "scripts": {
