@@ -22,15 +22,13 @@ var footerTxt = "\/* (C) Alicia Sykes <alicia@aliciasykes.com> 2015           " 
 
 /* Delete the files currently in finished directory */
 gulp.task('clean', function () {
-    return del([
-        './index.js'
-    ]);
+    return del([ './index.js' ]);
 });
 
 
 /* Lint, compile and minify CoffeeScript */
 gulp.task('build', ['clean'],  function(){
-    return gulp.src('./src/**/*.coffee')
+    return gulp.src('./*.coffee')
         .pipe(lint())
         .pipe(lint.reporter())
         .pipe(coffee())
@@ -54,7 +52,7 @@ gulp.task('test', function (cb) {
 
 /* Watch for changes and refresh */
 gulp.task('watch', function(){
-    gulp.watch('./src/**/*.coffee', ['test-after-build']);
+    gulp.watch('./**/*.coffee', ['test-after-build']);
     gulp.watch('./test/**/*.coffee', ['test']);
 });
 
