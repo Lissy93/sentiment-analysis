@@ -1,38 +1,60 @@
 (function() {
-  var afinnWordList, analyseSentence, doesWordExist, getScoreOfWord, getWordsInSentence, removeDuplicates, scaleScore;
+    var sentimentAnalysisPath = __dirname;
 
-  afinnWordList = require(__dirname + '/AFINN-111.json');
+  function analizer(opts) {
+      this.afinnWordList = require(sentimentAnalysisPath + '/AFINN-111.json');
+      if (opts) {
+          if (opts.customWordsFile) {
+              opts.customWords = require(opts.customWordsFile);
+          }
+          if (opts.customWords) {
+              for (var i in opts.customWords) {
+                  this.afinnWordList[i] = opts.customWords[i];
+              }
+          }
+      }
+  }
 
-  doesWordExist = function(word) {
-    if (word in afinnWordList) {
+  analizer.prototype.analyseSentence = function(sentence) {
+    var i, len, score, word, wordsArr;
+    score = 0;
+    wordsArr = this.getWordsInSentence(sentence);
+    for (i = 0, len = wordsArr.length; i < len; i++) {
+      word = wordsArr[i];
+      if (this.doesWordExist(word)) {
+        score += this.getScoreOfWord(word);
+      }
+    }
+    return this.scaleScore(score);
+  };
+
+  analizer.prototype.doesWordExist = function(word) {
+    if (word in this.afinnWordList) {
       return true;
     } else {
       return false;
     }
   };
 
-  getScoreOfWord = function(word) {
-    if (afinnWordList[word]) {
-      return afinnWordList[word];
+  analizer.prototype.getScoreOfWord = function(word) {
+    if (this.afinnWordList[word]) {
+      return this.afinnWordList[word];
     } else {
       return 0;
     }
   };
 
-  getWordsInSentence = function(sentence) {
-    sentence = sentence != null ? sentence : '';
+  analizer.prototype.getWordsInSentence = function(sentence) {
+    sentence = sentence !== null ? sentence : '';
     sentence = typeof sentence === 'string' ? sentence : '';
-    sentence = sentence.toLowerCase();
-    sentence = sentence.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
-    sentence = sentence.replace(/[^\w\s]/gi, '');
-    sentence = sentence.split(' ');
-    sentence = sentence.filter(function(n) {
+    sentence = sentence.toLowerCase().replace(/(?:https?|ftp):\/\/[\n\S]+/g, '').replace(/[^\w\s]/gi, '');
+    sentence = sentence.split(' ').filter(function(n) {
       return n !== '';
     });
-    return sentence = removeDuplicates(sentence);
+    return this.removeDuplicates(sentence);
   };
 
-  removeDuplicates = function(arr) {
+  analizer.prototype.removeDuplicates = function(arr) {
     var i, key, ref, res, results, value;
     if (arr.length === 0) {
       return [];
@@ -49,39 +71,13 @@
     return results;
   };
 
-  scaleScore = function(score) {
+  analizer.prototype.scaleScore = function(score) {
     score = score > 10 ? 10 : score;
     score = score < -10 ? -10 : score;
     return score / 10;
   };
 
-  analyseSentence = function(sentence) {
-    var i, len, score, word, wordsArr;
-    score = 0;
-    wordsArr = getWordsInSentence(sentence);
-    for (i = 0, len = wordsArr.length; i < len; i++) {
-      word = wordsArr[i];
-      if (doesWordExist(word)) {
-        score += getScoreOfWord(word);
-      }
-    }
-    return scaleScore(score);
-  };
-
-  module.exports = analyseSentence;
-
-  if (process.env.NODE_ENV === 'test') {
-    module.exports = {
-      main: analyseSentence,
-      _private: {
-        scaleScore: scaleScore,
-        doesWordExist: doesWordExist,
-        getScoreOfWord: getScoreOfWord,
-        removeDuplicates: removeDuplicates,
-        getWordsInSentence: getWordsInSentence
-      }
-    };
-  }
+  module.exports = analizer;
 
 }).call(this);
 /* (C) Alicia Sykes <alicia@aliciasykes.com> 2015           *\
