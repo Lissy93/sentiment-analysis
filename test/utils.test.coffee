@@ -127,6 +127,10 @@ describe 'getWordsInSentence will transform a sentence into a clean array', ()->
     expect(sentimentAnalysis.getWordsInSentence('foo ! ^&*^&^%^%&^^&%%^bar$$%^'))
     .eql(['foo', 'bar'])
 
+  it 'Should handle phrase words', ()->
+    expect(sentimentAnalysis.getWordsInSentence('cool stuff cashing in'))
+    .eql(['CoolStuff', 'CashingIn'])
+
 describe 'removeDupplicates should remove dupplicates from an array', () ->
   removeDupplicates = sentimentAnalysis.constructor.removeDuplicates
 
@@ -162,3 +166,32 @@ describe 'scaleScore should ensure the score is within the valid range', () ->
     expect(scaleScore(42)).to.be.within(-1,+1);
     expect(scaleScore(3.1415926535897932)).to.be.within(-1,+1);
     expect(scaleScore(-273.15)).to.be.within(-1,+1);
+
+describe 'isPhrase should detect words composed by multiple words', () ->
+  isPhrase = sentimentAnalysis.constructor.isPhrase
+
+  it 'should not be a phrase for single words', () ->
+    expect(isPhrase('nice')).to.be.false
+    expect(isPhrase('good')).to.be.false
+    expect(isPhrase('great')).to.be.false
+    expect(isPhrase('awesome')).to.be.false
+
+  it 'should be a phrase for multiple words', () ->
+    expect(isPhrase('cashing in')).to.be.true
+    expect(isPhrase('cool stuff')).to.be.true
+    expect(isPhrase('does not work')).to.be.true
+    expect(isPhrase('dont like')).to.be.true
+
+describe 'compressPhrase should camelize phrases', () ->
+  compressPhrase = sentimentAnalysis.constructor.compressPhrase
+
+  it 'should camelize', () ->
+    expect(compressPhrase('cashing in')).to.be.equal('CashingIn')
+    expect(compressPhrase('cool stuff')).to.be.equal('CoolStuff')
+    expect(compressPhrase('does not work')).to.be.equal('DoesNotWork')
+    expect(compressPhrase('dont like')).to.be.equal('DontLike')
+
+  it 'afinnWordList should contain camelized version of phrases', () ->
+    expect(sentimentAnalysis.afinnWordList.CashingIn).to.be.a('number')
+    expect(sentimentAnalysis.afinnWordList.CoolStuff).to.be.a('number')
+    expect(sentimentAnalysis.afinnWordList.DoesNotWork).to.be.a('number')

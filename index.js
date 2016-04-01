@@ -1,11 +1,11 @@
 (function() {
-  var analizer, sentimentAnalysisPath;
+  var Analizer, sentimentAnalysisPath;
 
   sentimentAnalysisPath = __dirname;
 
-  module.exports = analizer = (function() {
-    function analizer(opts) {
-      var i, ref, word;
+  module.exports = Analizer = (function() {
+    function Analizer(opts) {
+      var compressedWord, i, ref, ref1, value, word;
       this.afinnWordList = require(sentimentAnalysisPath + '/AFINN-111.json');
       if (opts) {
         if (opts.customWordsFile) {
@@ -19,9 +19,21 @@
           }
         }
       }
+      this.afinnPhrases = [];
+      this.afinnPhrasesCamel = [];
+      ref1 = this.afinnWordList;
+      for (word in ref1) {
+        value = ref1[word];
+        if (this.constructor.isPhrase(word)) {
+          compressedWord = this.constructor.compressPhrase(word);
+          this.afinnPhrases.push(word);
+          this.afinnPhrasesCamel.push(compressedWord);
+          this.afinnWordList[compressedWord] = value;
+        }
+      }
     }
 
-    analizer.prototype.analyseSentence = function(sentence) {
+    Analizer.prototype.analyseSentence = function(sentence) {
       var j, len, score, word, wordsArr;
       score = 0;
       wordsArr = this.getWordsInSentence(sentence);
@@ -34,19 +46,25 @@
       return this.constructor.scaleScore(score);
     };
 
-    analizer.prototype.doesWordExist = function(word) {
+    Analizer.prototype.doesWordExist = function(word) {
       return word in this.afinnWordList;
     };
 
-    analizer.prototype.getScoreOfWord = function(word) {
+    Analizer.prototype.getScoreOfWord = function(word) {
       return this.afinnWordList[word] || 0;
     };
 
-    analizer.prototype.getWordsInSentence = function(sentence) {
+    Analizer.prototype.getWordsInSentence = function(sentence) {
+      var i, j, len, ref, word;
       sentence = sentence || '';
       sentence = typeof sentence === 'string' ? sentence.toLowerCase() : '';
       sentence = sentence.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
       sentence = sentence.replace(/[^\w\s]/gi, '');
+      ref = this.afinnPhrases;
+      for (i = j = 0, len = ref.length; j < len; i = ++j) {
+        word = ref[i];
+        sentence = sentence.replace(word, this.afinnPhrasesCamel[i]);
+      }
       sentence = sentence.split(' ');
       sentence = sentence.filter(function(n) {
         return n !== '';
@@ -54,7 +72,7 @@
       return this.constructor.removeDuplicates(sentence);
     };
 
-    analizer.removeDuplicates = function(arr) {
+    Analizer.removeDuplicates = function(arr) {
       var j, key, ref, res, results, value;
       if (arr.length === 0) {
         return [];
@@ -71,13 +89,31 @@
       return results;
     };
 
-    analizer.scaleScore = function(score) {
+    Analizer.scaleScore = function(score) {
       score = score > 10 ? 10 : score;
       score = score < -10 ? -10 : score;
       return score / 10;
     };
 
-    return analizer;
+    Analizer.isPhrase = function(word) {
+      return word.indexOf(' ') !== -1;
+    };
+
+    Analizer.compressPhrase = function(phrase) {
+      var w;
+      return ((function() {
+        var j, len, ref, results;
+        ref = phrase.split(/\s+/);
+        results = [];
+        for (j = 0, len = ref.length; j < len; j++) {
+          w = ref[j];
+          results.push(w[0].toUpperCase() + w.slice(1).toLowerCase());
+        }
+        return results;
+      })()).join('');
+    };
+
+    return Analizer;
 
   })();
 

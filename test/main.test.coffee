@@ -23,6 +23,11 @@ describe 'Check the modules basic functionality', ()->
     expect(sentimentAnalysis.analyseSentence('Today is a wonderful amazing awesome day')).equal(1)
     expect(sentimentAnalysis.analyseSentence('I am so grateful for all the presents, thank you!')).equal(0.5)
 
+  it 'Should return the correct sentiment value for sentences that contains phrase-words', () ->
+    expect(sentimentAnalysis.analyseSentence('This is some cool stuff')).equal(0.3)
+    expect(sentimentAnalysis.analyseSentence('This does not work')).equal(-0.3)
+    expect(sentimentAnalysis.analyseSentence('I don\'t like you')).equal(-0.2)
+
   it 'Should not return a score greater than 1 of smaller than -1', () ->
     expect(sentimentAnalysis.analyseSentence('happy happy amazing awesome cool'))
     .to.be.above(-1.1).to.be.below(1.1)
