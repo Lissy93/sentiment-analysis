@@ -18,7 +18,8 @@ var watch   = require('gulp-watch');
 require('coffee-script/register');
 
 var footerTxt = "\/* (C) Alicia Sykes <alicia@aliciasykes.com> 2015           " +
-    "*\\\r\n\\* MIT License. Read full license at: https:\/\/goo.gl\/IL4lQJ *\/";
+    "*\\\r\n|* (C) Maurizio Carboni <mcarboni@redant.com> 2016          " +
+    "*|\r\n\\* MIT License. Read full license at: https:\/\/goo.gl\/IL4lQJ *\/";
 
 /* Delete the files currently in finished directory */
 gulp.task('clean', function () {
@@ -37,7 +38,7 @@ gulp.task('build', ['clean'],  function(){
 });
 
 /* Run unit tests and generate coverage report */
-gulp.task('test', function (cb) {
+gulp.task('test', ['build'], function (cb) {
     gulp.src(['./index.js'])
         .pipe(istanbul())
         .pipe(istanbul.hookRequire())
