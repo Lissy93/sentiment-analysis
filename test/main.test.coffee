@@ -1,38 +1,38 @@
 expect = require('chai').expect
 
-process.env.NODE_ENV = 'test'
+sentimentAnalysisLib = require('../index')
 
-sentimentAnalysis = require('../index').main
+sentimentAnalysis = new sentimentAnalysisLib
 
 
 describe 'Check the modules basic functionality', ()->
 
   it 'should return an integer', () ->
-    expect(sentimentAnalysis('lorem ipsum dolor seit amet'))
+    expect(sentimentAnalysis.analyseSentence('lorem ipsum dolor seit amet'))
     .to.be.a('number')
-    expect(sentimentAnalysis('foo bar')).to.not.be.undefined;
+    expect(sentimentAnalysis.analyseSentence('foo bar')).to.not.be.undefined;
 
   it 'Should return the correct sentiment value for negative sentences', () ->
-    expect(sentimentAnalysis('I hate everything, everything is stupid')).equal(-0.5)
-    expect(sentimentAnalysis('London is gloomy today because of all the smog')).equal(-0.4)
-    expect(sentimentAnalysis('He was captured and put into slavery')).equal(-0.3)
-    expect(sentimentAnalysis('Windows is very unstable')).equal(-0.2)
-    expect(sentimentAnalysis('The slug was tired, he felt slugish')).equal(-0.2)
+    expect(sentimentAnalysis.analyseSentence('I hate everything, everything is stupid')).equal(-0.5)
+    expect(sentimentAnalysis.analyseSentence('London is gloomy today because of all the smog')).equal(-0.4)
+    expect(sentimentAnalysis.analyseSentence('He was captured and put into slavery')).equal(-0.3)
+    expect(sentimentAnalysis.analyseSentence('Windows is very unstable')).equal(-0.2)
+    expect(sentimentAnalysis.analyseSentence('The slug was tired, he felt slugish')).equal(-0.2)
 
   it 'Should return the correct sentiment value for positive sentences', () ->
-    expect(sentimentAnalysis('Today is a wonderful amazing awesome day')).equal(1)
-    expect(sentimentAnalysis('I am so grateful for all the presents, thank you!')).equal(0.5)
+    expect(sentimentAnalysis.analyseSentence('Today is a wonderful amazing awesome day')).equal(1)
+    expect(sentimentAnalysis.analyseSentence('I am so grateful for all the presents, thank you!')).equal(0.5)
+
+  it 'Should return the correct sentiment value for sentences that contains phrase-words', () ->
+    expect(sentimentAnalysis.analyseSentence('This is some cool stuff')).equal(0.3)
+    expect(sentimentAnalysis.analyseSentence('This does not work')).equal(-0.3)
+    expect(sentimentAnalysis.analyseSentence('I don\'t like you')).equal(-0.2)
 
   it 'Should not return a score greater than 1 of smaller than -1', () ->
-    expect(sentimentAnalysis('happy happy amazing awesome cool'))
+    expect(sentimentAnalysis.analyseSentence('happy happy amazing awesome cool'))
     .to.be.above(-1.1).to.be.below(1.1)
-    expect(sentimentAnalysis('crap crap crap crap'))
+    expect(sentimentAnalysis.analyseSentence('crap crap crap crap'))
     .to.be.above(-1.1).to.be.below(1.1)
 
 
   it 'Should be able to cope with weird inputs and never crash', ()->
-
-
-
-
-
