@@ -17,6 +17,11 @@ module.exports = class Analizer
     @afinnPhrases = []
     @afinnPhrasesCamel = []
     for word,value of @afinnWordList
+      wordA = @constructor.transformPlainApostrophe(word)
+      if ( wordA != word )
+        @afinnWordList[wordA] = value
+        delete @afinnWordList[word]
+        word = wordA
       if @constructor.isPhrase(word)
         compressedWord = @constructor.compressPhrase(word)
         @afinnPhrases.push word
@@ -46,10 +51,12 @@ module.exports = class Analizer
     sentence = sentence || '' # Double check is defined
     sentence = if typeof sentence == 'string'then sentence.toLowerCase() else ''
     sentence = sentence.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '') # Remove URLs
-    sentence = sentence.replace(/[^\w\s]/gi, '')  # Remove special characters
+    sentence = sentence.replace(/[\n\r\t]/gi, ' ')  # Transform \n and \t
+    sentence = @constructor.transformPlainApostrophe(sentence) # Transform '
+    sentence = sentence.replace(/[^\w\s']/gi, '')  # Remove special characters
     # Replace phrases with the camelized version
     for word,i in @afinnPhrases
-      sentence = sentence.replace(word, @afinnPhrasesCamel[i])
+      sentence = sentence.replace( new RegExp(word,'g'), @afinnPhrasesCamel[i])
     sentence = sentence.split(' ')                # Split into an array
     sentence = sentence.filter((n) -> n != '')    # Remove blanks
     @constructor.removeDuplicates(sentence)
@@ -74,3 +81,6 @@ module.exports = class Analizer
   @compressPhrase: ( phrase ) ->
     (w[0].toUpperCase() + w[1..-1].toLowerCase() for w in phrase.split /\s+/)
     .join ''
+
+  @transformPlainApostrophe: ( phrase ) ->
+    phrase.replace(/[`"]/gi, '\'')

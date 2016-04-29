@@ -4,7 +4,11 @@ process.env.NODE_ENV = 'test'
 
 sentimentAnalysisLib = require('../index')
 
-sentimentAnalysis = new sentimentAnalysisLib
+sentimentAnalysis = new sentimentAnalysisLib({
+  customWords : {
+    'special`word' : 0
+  }
+})
 
 
 describe 'doesWordExist will return boolean weather word exists', ()->
@@ -57,6 +61,16 @@ describe 'doesWordExist will return boolean weather word exists', ()->
     expect(sentimentAnalysis.doesWordExist([])).to.be.false
     expect(sentimentAnalysis.doesWordExist(undefined)).to.be.false
 
+describe 'special words should be converted on a common format', () ->
+
+  it 'words that contains a ` should become a \'', () ->
+    expect(sentimentAnalysis.doesWordExist('special`word')).to.be.false
+    expect(sentimentAnalysis.doesWordExist('special\'word')).to.be.true
+
+  it 'words that contains a space should be camelized', () ->
+    expect(sentimentAnalysis.doesWordExist('CoolStuff')).to.be.true
+    expect(sentimentAnalysis.doesWordExist('CashingIn')).to.be.true
+    expect(sentimentAnalysis.doesWordExist('Don\'tLike')).to.be.true
 
 
 describe 'sentimentAnalysis.getScoreOfWord method return a sentiment score for that word', ()->
@@ -123,20 +137,35 @@ describe 'getWordsInSentence will transform a sentence into a clean array', ()->
     expect(sentimentAnalysis.getWordsInSentence('space       blank        '))
     .eql(['space', 'blank'])
 
+  it 'Should transform new lines and tabs', ()->
+    expect(sentimentAnalysis.getWordsInSentence("space\nblank\tother"))
+    .eql(['space', 'blank', 'other'])
+
   it 'Should remove special characters', ()->
     expect(sentimentAnalysis.getWordsInSentence('foo ! ^&*^&^%^%&^^&%%^bar$$%^'))
     .eql(['foo', 'bar'])
+
+  it 'Should transform apostrophes to a plain apostrophe', ()->
+    expect(sentimentAnalysis.getWordsInSentence('don\'t like don`t like don"t like'))
+    .eql(['Don\'tLike'])
 
   it 'Should handle phrase words', ()->
     expect(sentimentAnalysis.getWordsInSentence('cool stuff cashing in'))
     .eql(['CoolStuff', 'CashingIn'])
 
-describe 'removeDupplicates should remove dupplicates from an array', () ->
-  removeDupplicates = sentimentAnalysis.constructor.removeDuplicates
+describe 'removeDuplicates should remove dupplicates from an array', () ->
+  removeDuplicates = sentimentAnalysis.constructor.removeDuplicates
 
   it 'should remove duplicates', () ->
-    expect(removeDupplicates(['hello', 'world', 'hello', 'hello']))
+    expect(removeDuplicates(['hello', 'world', 'hello', 'hello']))
     .eql(['hello', 'world'])
+
+describe 'transformPlainApostrophe should transform strange apostrophes to plain one', () ->
+  transformPlainApostrophe = sentimentAnalysis.constructor.transformPlainApostrophe
+
+  it 'should trasform to plain', () ->
+    expect(transformPlainApostrophe('don\'t like don`t like don"t like'))
+    .eql('don\'t like don\'t like don\'t like')
 
 describe 'scaleScore should ensure the score is within the valid range', () ->
   scaleScore = sentimentAnalysis.constructor.scaleScore

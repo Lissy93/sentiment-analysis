@@ -5,7 +5,7 @@
 
   module.exports = Analizer = (function() {
     function Analizer(opts) {
-      var compressedWord, i, ref, ref1, value, word;
+      var compressedWord, i, ref, ref1, value, word, wordA;
       this.afinnWordList = require(sentimentAnalysisPath + '/AFINN-111.json');
       if (opts) {
         if (opts.customWordsFile) {
@@ -24,6 +24,12 @@
       ref1 = this.afinnWordList;
       for (word in ref1) {
         value = ref1[word];
+        wordA = this.constructor.transformPlainApostrophe(word);
+        if (wordA !== word) {
+          this.afinnWordList[wordA] = value;
+          delete this.afinnWordList[word];
+          word = wordA;
+        }
         if (this.constructor.isPhrase(word)) {
           compressedWord = this.constructor.compressPhrase(word);
           this.afinnPhrases.push(word);
@@ -59,11 +65,13 @@
       sentence = sentence || '';
       sentence = typeof sentence === 'string' ? sentence.toLowerCase() : '';
       sentence = sentence.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '');
-      sentence = sentence.replace(/[^\w\s]/gi, '');
+      sentence = sentence.replace(/[\n\r\t]/gi, ' ');
+      sentence = this.constructor.transformPlainApostrophe(sentence);
+      sentence = sentence.replace(/[^\w\s']/gi, '');
       ref = this.afinnPhrases;
       for (i = j = 0, len = ref.length; j < len; i = ++j) {
         word = ref[i];
-        sentence = sentence.replace(word, this.afinnPhrasesCamel[i]);
+        sentence = sentence.replace(new RegExp(word, 'g'), this.afinnPhrasesCamel[i]);
       }
       sentence = sentence.split(' ');
       sentence = sentence.filter(function(n) {
@@ -111,6 +119,10 @@
         }
         return results;
       })()).join('');
+    };
+
+    Analizer.transformPlainApostrophe = function(phrase) {
+      return phrase.replace(/[`"]/gi, '\'');
     };
 
     return Analizer;
