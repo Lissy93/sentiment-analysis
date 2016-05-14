@@ -1,6 +1,6 @@
 {
   "name": "sentiment-analysis",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Sentiment analysis module using AFINN-111",
   "main": "index.js",
   "scripts": {
@@ -33,7 +33,8 @@
     "chai": "^3.3.0",
     "coffee-script": "^1.10.0",
     "del": "^2.0.2",
-    "gulp": "^3.9.0",
+    "gulp": "^3.9.1",
+    "gulp-brfs": "^0.1.0",
     "gulp-coffee": "^2.3.1",
     "gulp-coffeelint": "^0.5.0",
     "gulp-footer": "^1.0.5",

@@ -15,6 +15,8 @@ var footer  = require('gulp-footer');
 var mocha   = require('gulp-mocha');
 var istanbul= require('gulp-istanbul');
 var watch   = require('gulp-watch');
+var brfs    = require('gulp-brfs');
+
 require('coffee-script/register');
 
 var footerTxt = "\/* (C) Alicia Sykes <alicia@aliciasykes.com> 2015           " +
@@ -28,12 +30,14 @@ gulp.task('clean', function () {
 
 /* Lint, compile and minify CoffeeScript */
 gulp.task('build', ['clean'],  function(){
-    return gulp.src('./*.coffee')
+    return gulp.src('./index.coffee')
         .pipe(lint())
         .pipe(lint.reporter())
         .pipe(coffee())
+        .pipe(brfs())
+        // .pipe(uglify())
         .pipe(footer(footerTxt))
-        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest('./'));
 });
 
 /* Run unit tests and generate coverage report */
