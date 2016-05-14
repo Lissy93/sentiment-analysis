@@ -1,5 +1,8 @@
 
-afinnWordList = require __dirname + '/AFINN-111.json' # Get the AFINN-111 list
+fs = require 'fs'
+
+afinnWordList =
+  JSON.parse(fs.readFileSync(__dirname + '/AFINN-111.json', 'utf8'))
 
 # Returns a boolean true if given word is found in word list
 doesWordExist = (word)->
