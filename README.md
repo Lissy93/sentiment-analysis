@@ -22,6 +22,7 @@ sentimentAnalysis('It was a catastrophic disaster');  // -0.6
 ```
 sentiment-analysis will return a score between -1 and +1, where negative numbers represent a negative overall sentiment.
 
+For further examples of usage, see this [Example Gist].
 
 ## Testing
 `npm test`
@@ -29,10 +30,17 @@ sentiment-analysis will return a score between -1 and +1, where negative numbers
 See unit test, integration testing results on [Travis CI]
 
 ## Development
-See the `gulpfile.js` for documentation of build process.
+
+ - Run `npm run dev` to watch for file changes and rebuild the project
+ - Run `npm run build` to just text, lint, compile and minify the project
+ - Run `npm run test` to execute unit tests, and test for code coverage
+ - Run `npm run example` to run the example script
+
+See the `gulpfile.js` for full documentation of build process.
 
 ## License
-MIT © [Alicia Sykes](http://aliciasykes.com)
+MIT ï¿½ [Alicia Sykes](http://aliciasykes.com)
 
 [AFINN-111]: <http://www2.imm.dtu.dk/pubdb/views/publication_details.php?id=6010>
 [Travis CI]: <https://travis-ci.org/Lissy93/sentiment-analysis>
+[Example Gist]: <https://gist.github.com/Lissy93/0d9a3d5dc9d9c49c7b4b9319a7715703>
