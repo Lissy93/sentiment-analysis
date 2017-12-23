@@ -1,0 +1,8 @@
+/home/alicia/Dropbox/Coding/Nodejs/sentiment-analysis/SentimentAnalysis/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.fs
+/home/alicia/Dropbox/Coding/Nodejs/sentiment-analysis/SentimentAnalysis/bin/Debug/SentimentAnalysis.exe.config
+/home/alicia/Dropbox/Coding/Nodejs/sentiment-analysis/SentimentAnalysis/bin/Debug/SentimentAnalysis.exe.mdb
+/home/alicia/Dropbox/Coding/Nodejs/sentiment-analysis/SentimentAnalysis/bin/Debug/SentimentAnalysis.exe
+/home/alicia/Dropbox/Coding/Nodejs/sentiment-analysis/SentimentAnalysis/obj/Debug/SentimentAnalysis.exe
+/home/alicia/Dropbox/Coding/Nodejs/sentiment-analysis/SentimentAnalysis/obj/Debug/SentimentAnalysis.exe.mdb
+/home/alicia/Dropbox/Coding/Nodejs/sentiment-analysis/SentimentAnalysis/bin/Debug/FSharp.Core.dll
+/home/alicia/Dropbox/Coding/Nodejs/sentiment-analysis/SentimentAnalysis/bin/Debug/System.ValueTuple.dll

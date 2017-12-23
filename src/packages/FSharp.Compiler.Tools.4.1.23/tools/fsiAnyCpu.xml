@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>fsiAnyCpu</name></assembly>
+<members>
+<member name="P:Microsoft.FSharp.Compiler.Interactive.ReadLineConsole.Prompt">
+<summary>
+ Inset all inputs by this amount
+</summary>
+</member>
+<member name="T:Microsoft.FSharp.Compiler.Interactive.Options">
+<summary>
+ List of available optionsCache
+</summary>
+</member>
+<member name="T:Microsoft.FSharp.Compiler.Interactive.History">
+<summary>
+ Class managing the command History.
+</summary>
+</member>
+<member name="T:Microsoft.FSharp.Compiler.Interactive.Utils">
+<summary>
+ Cursor position management
+</summary>
+</member>
+<member name="T:Microsoft.FSharp.Compiler.Interactive.ConsoleOptions">
+<summary>
+ System.Console.ReadKey appears to return an ANSI character (not the expected the unicode character).
+ When this fix flag is true, this byte is converted to a char using the System.Console.InputEncoding.
+ This is a code-around for bug://1345.
+ Fixes to System.Console.ReadKey may break this code around, hence the option here.
+</summary>
+</member>
+<member name="T:Sample.Microsoft.FSharp.Compiler.Interactive.Main.WinFormsEventLoop">
+<summary>
+ This is the event loop implementation for winforms
+</summary>
+</member>
+<member name="M:Sample.Microsoft.FSharp.Compiler.Interactive.Main.DummyForm.Finalize">
+<summary>
+ Creating the dummy form object can crash on Mono Mac, and then prints a nasty background
+ error during finalization of the half-initialized object...
+</summary>
+</member>
+<member name="T:Sample.Microsoft.FSharp.Compiler.Interactive.Main.DummyForm">
+<summary>
+Use a dummy to access protected member
+</summary>
+</member>
+<member name="M:Sample.Microsoft.FSharp.Compiler.Interactive.Main.StartServer(Microsoft.FSharp.Compiler.Interactive.Shell.FsiEvaluationSession,System.String)">
+<summary>
+ Starts the remoting server to handle interrupt reuests from a host tool.
+</summary>
+</member>
+<member name="M:Sample.Microsoft.FSharp.Compiler.Interactive.Main.TrySetUnhandledExceptionMode">
+<summary>
+ Try to set the unhandled exception mode of System.Windows.Forms
+</summary>
+</member>
+<member name="M:Sample.Microsoft.FSharp.Compiler.Interactive.Main.SetCurrentUICultureForThread(Microsoft.FSharp.Core.FSharpOption{System.Int32})">
+<summary>
+ Set the current ui culture for the current thread.
+</summary>
+</member>
+</members>
+</doc>
