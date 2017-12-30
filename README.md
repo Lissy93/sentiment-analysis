@@ -1,4 +1,6 @@
 # sentiment-analysis
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/Lissy93/sentiment-analysis.svg)](https://greenkeeper.io/)
 [![Build Status](https://travis-ci.org/Lissy93/sentiment-analysis.svg?branch=dev)](https://travis-ci.org/Lissy93/sentiment-analysis)
 [![Dependency Status](https://david-dm.org/lissy93/sentiment-analysis.svg)](https://david-dm.org/lissy93/sentiment-analysis)
 [![devDependency Status](https://david-dm.org/lissy93/sentiment-analysis/dev-status.svg)](https://david-dm.org/lissy93/sentiment-analysis#info=devDependencies)
