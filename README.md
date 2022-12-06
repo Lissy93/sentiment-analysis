@@ -1,11 +1,14 @@
 <!-- Title + Description -->
 <h1 align="center">Sentiment Analysis</h1>
 <p align="center">
-  <i>A zero-dependency sentiment analysis NPM module, based on the AFINN-111 word list</i>
+  <i>A light-weight sentiment analysis NPM module, based on the AFINN-111 word list</i>
   <br><br>
    <a href="https://travis-ci.org/Lissy93/sentiment-analysis" title="Build"><img src="https://travis-ci.org/Lissy93/sentiment-analysis.svg?branch=dev" /></a>
   <a href="https://snyk.io/test/github/Lissy93/sentiment-analysis/" title="Security"><img src="https://snyk.io/test/github/Lissy93/sentiment-analysis/badge.svg" /></a>
-  <a href="https://codeclimate.com/github/Lissy93/sentiment-analysis" title="Quality"><img src="https://codeclimate.com/github/Lissy93/sentiment-analysis/badges/gpa.svg" /></a>
+  <a href="https://www.npmjs.com/package/sentiment-analysis"><img src="https://img.shields.io/npm/dt/sentiment-analysis" /></a>
+  <a href="https://bundlephobia.com/package/sentiment-analysis@0.1.2"><img src="https://img.shields.io/bundlephobia/minzip/sentiment-analysis?color=success" /></a>
+  <a href="https://codeclimate.com/github/Lissy93/sentiment-analysis/maintainability"><img src="https://api.codeclimate.com/v1/badges/d122350f54e987951c4d/maintainability" /></a>
+  <a href="https://github.com/Lissy93/sentiment-analysis#license"><img src="https://img.shields.io/npm/l/sentiment-analysis?color=success" /></a>
 </p>
 
 <!-- Line Break -->
